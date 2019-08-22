@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <H1>Form Fields</H1>
+      <div *ngIf="!!JsonSchema">
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          class="example-list"
+          [cdkDropListConnectedTo]="[doneList]"
+        >
+          <div *ngFor="let item of JsonSchema.properties | keyvalue">
+            <span [cdkDragData]="item" cdkDrag>
+              {{ item.key }} <i class="fas fa-plus-circle" (click)="addField(item)"></i>
+            </span>
+            <div *ngFor="let element of item.value | keyvalue">
+              <div *ngIf="element.key === 'properties'">
+                <div *ngFor="let elem of element.value | keyvalue">
+                  <span [cdkDragData]="elem" cdkDrag *ngIf="elem.key != 'type' || elem.key != 'items'">
+                    -- {{ elem.key }} <i class="fas fa-plus-circle" (click)="addField(elem)"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <pre>
+              {{ JsonSchema.properties | json }}
+          </pre> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <H1>Form Preview</H1>
+      <div
+        cdkDropList
+        #doneList="cdkDropList"
+        [cdkDropListConnectedTo]="[todoList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+      <json-schema-form [schema]="CustomJsonSchema" [form]="yourAngularSchemaFormLayout" framework="bootstrap-3"
+      ><!--[(model)]="yourData"-->
+      </json-schema-form>
+      </div>
+
+
+      <pre>
+        {{ CustomJsonSchema | json }}
+      </pre>
+    </div>
+  </div>
+</div>
