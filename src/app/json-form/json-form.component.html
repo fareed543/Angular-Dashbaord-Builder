@@ -3,12 +3,7 @@
     <div class="col">
       <H1>Form Fields</H1>
       <div *ngIf="!!JsonSchema">
-        <div
-          cdkDropList
-          #todoList="cdkDropList"
-          class="example-list"
-          [cdkDropListConnectedTo]="[doneList]"
-        >
+        <div cdkDropList #todoList="cdkDropList" class="example-list" [cdkDropListConnectedTo]="[doneList]">
           <div *ngFor="let item of JsonSchema.properties | keyvalue">
             <span [cdkDragData]="item" cdkDrag>
               {{ item.key }} <i class="fas fa-plus-circle" (click)="addField(item)"></i>
@@ -38,11 +33,10 @@
         class="example-list"
         (cdkDropListDropped)="drop($event)"
       >
-      <json-schema-form [schema]="CustomJsonSchema" [form]="yourAngularSchemaFormLayout" framework="bootstrap-3"
-      ><!--[(model)]="yourData"-->
-      </json-schema-form>
+        <json-schema-form [schema]="CustomJsonSchema" [form]="yourAngularSchemaFormLayout" framework="bootstrap-3"
+          ><!--[(model)]="yourData"-->
+        </json-schema-form>
       </div>
-
 
       <pre>
         {{ CustomJsonSchema | json }}

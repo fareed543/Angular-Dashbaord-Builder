@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { JsonService } from './json.service';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-json-form',
@@ -61,7 +61,7 @@ export class JsonFormComponent implements OnInit, AfterViewInit {
   // ];
 
   drop(event: CdkDragDrop<string[]>) {
-    const field = { key : event.item.data['key'] , value: event.item.data['value']}
+    const field = { key: event.item.data['key'], value: event.item.data['value'] };
     this.addField(field);
     console.log(event.container);
     console.log(event.previousContainer);
