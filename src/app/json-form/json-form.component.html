@@ -5,14 +5,22 @@
       <div *ngIf="!!JsonSchema">
         <div cdkDropList #todoList="cdkDropList" class="example-list" [cdkDropListConnectedTo]="[doneList]">
           <div *ngFor="let item of JsonSchema.properties | keyvalue">
+            <i
+              *ngIf="!!item.value.properties"
+              class="fas"
+              [ngClass]="!!item.expand ? 'fa-angle-down' : 'fa-angle-up'"
+              (click)="showTree(item)"
+            ></i>
             <span [cdkDragData]="item" cdkDrag>
-              {{ item.key }} <i class="fas fa-plus-circle" (click)="addField(item)"></i>
+              {{ item.key }}
+              <!-- <i class="fas fa-plus-circle" (click)="addField(item)"></i> -->
             </span>
-            <div *ngFor="let element of item.value | keyvalue">
+            <div [hidden]="item.expand" *ngFor="let element of item.value | keyvalue">
               <div *ngIf="element.key === 'properties'">
                 <div *ngFor="let elem of element.value | keyvalue">
                   <span [cdkDragData]="elem" cdkDrag *ngIf="elem.key != 'type' || elem.key != 'items'">
-                    -- {{ elem.key }} <i class="fas fa-plus-circle" (click)="addField(elem)"></i>
+                    -- {{ elem.key }}
+                    <!-- <i class="fas fa-plus-circle" (click)="addField(elem)"></i> -->
                   </span>
                 </div>
               </div>

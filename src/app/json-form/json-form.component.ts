@@ -45,6 +45,14 @@ export class JsonFormComponent implements OnInit, AfterViewInit {
     };
   }
 
+  showTree(item: any) {
+    if (item.expand) {
+      item.expand = !item.expand;
+    } else {
+      item.expand = true;
+    }
+  }
+
   // todo = [
   //   'Get to work',
   //   'Pick up groceries',

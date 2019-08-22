@@ -13,7 +13,7 @@
     </button>
     <div id="navbar-menu" class="collapse navbar-collapse float-xs-none" [ngbCollapse]="menuHidden">
       <div class="navbar-nav">
-        <a class="nav-item nav-link text-uppercase" routerLink="/home" routerLinkActive="active">
+        <!-- <a class="nav-item nav-link text-uppercase" routerLink="/home" routerLinkActive="active">
           <i class="fas fa-home"></i>
           <span translate> Monitor </span>
         </a>
@@ -24,7 +24,31 @@
         <a class="nav-item nav-link text-uppercase" routerLink="/jsonform" routerLinkActive="active">
           <i class="fas fa-layer-group"></i>
           <span translate> Design </span>
+        </a> -->
+
+        <div class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+          <a id="language-dropdown" class="nav-link" ngbDropdownToggle>
+            <!-- <i class="fas fa-layer-group"></i> -->
+            Monitor
+          </a>
+          <div ngbDropdownMenu aria-labelledby="language-dropdown">
+            <button class="dropdown-item">Overview</button>
+            <button class="dropdown-item">Events</button>
+            <button class="dropdown-item">Reports</button>
+          </div>
+        </div>
+        <a class="nav-item nav-link text-uppercase" routerLink="/about" routerLinkActive="active">
+          <i class="fas fa-question-circle"></i>
+          <span translate> Workflow </span>
         </a>
+        <div class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+          <a id="language-dropdown" class="nav-link" ngbDropdownToggle>Monitor</a>
+          <div ngbDropdownMenu aria-labelledby="language-dropdown">
+            <button class="dropdown-item" ngbDropdown routerLink="/jsonform" routerLinkActive="active">Widgets</button>
+            <button class="dropdown-item" ngbDropdown>Boards</button>
+            <button class="dropdown-item" ngbDropdown>Nodes</button>
+          </div>
+        </div>
       </div>
 
       <div class="navbar-nav ml-auto">
@@ -49,24 +73,6 @@
             <button class="dropdown-item" (click)="logout()" translate>Logout</button>
           </div>
         </div>
-      </div>
-    </div>
-  </nav>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark margin-top--17">
-    <div id="navbar-menu" class="collapse navbar-collapse float-xs-none" [ngbCollapse]="menuHidden">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link text-uppercase" routerLink="" routerLinkActive="active">
-          <i class="fas fa-home"></i>
-          <span translate> Widgets </span>
-        </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="" routerLinkActive="active">
-          <i class="fas fa-question-circle"></i>
-          <span translate> Boards </span>
-        </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="" routerLinkActive="active">
-          <i class="fas fa-layer-group"></i>
-          <span translate> Nodes </span>
-        </a>
       </div>
     </div>
   </nav>
