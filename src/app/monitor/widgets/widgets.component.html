@@ -1,7 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col">
-      <H1>Form Fields</H1>
+    <div class="col-sm-12">
+      <h1>Create Widgets</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3 border">
       <div *ngIf="!!JsonSchema">
         <div cdkDropList #todoList="cdkDropList" class="example-list" [cdkDropListConnectedTo]="[doneList]">
           <div *ngFor="let item of JsonSchema.properties | keyvalue">
@@ -27,23 +32,23 @@
         </div>
       </div>
     </div>
-    <div class="col-6">
-      <H1>Form Preview</H1>
+    <div class="col-sm-9 border">
       <div
+        b
         cdkDropList
         #doneList="cdkDropList"
         [cdkDropListConnectedTo]="[todoList]"
-        class="example-list"
+        class="example-list dotted-border"
         (cdkDropListDropped)="drop($event)"
       >
-        <json-schema-form [schema]="CustomJsonSchema" [form]="yourAngularSchemaFormLayout" framework="bootstrap-3"
+        <json-schema-form
+          [schema]="CustomJsonSchema"
+          [form]="yourAngularSchemaFormLayout"
+          framework="bootstrap-3"
+          (onSubmit)="onFormSubmit($event)"
           ><!--[(model)]="yourData"-->
         </json-schema-form>
       </div>
-
-      <pre>
-        {{ CustomJsonSchema | json }}
-      </pre>
     </div>
   </div>
 </div>

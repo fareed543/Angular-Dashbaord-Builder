@@ -1,0 +1,42 @@
+<div class="container">
+  <!-- <pre>
+        {{yourAngularSchemaFormLayout | json}}
+      </pre> -->
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Boards</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3 ">
+      <h1>Widgets</h1>
+      <div
+        cdkDropList
+        #widgetsList="cdkDropList"
+        [cdkDropListData]="widgets"
+        [cdkDropListConnectedTo]="[selectedWidgetsList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="example-box" *ngFor="let item of widgets" cdkDrag>{{ item }}</div>
+      </div>
+    </div>
+    <div class="col-sm-9 border">
+      <div
+        cdkDropList
+        #selectedWidgetsList="cdkDropList"
+        [cdkDropListData]="selectedWidgets"
+        [cdkDropListConnectedTo]="[widgetsList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="example-box" *ngFor="let item of selectedWidgets" cdkDrag>
+          <h1>{{ item }}</h1>
+          <json-schema-form [schema]="JsonSchema" framework="bootstrap-3" [options]="jsonFormOptions">
+          </json-schema-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

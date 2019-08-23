@@ -24,7 +24,7 @@ import { Bootstrap3FrameworkModule } from 'angular7-json-schema-form';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaterialModule } from './ngx-material.module';
-import { DragulaModule } from 'ng2-dragula';
+import { MonitorModule } from './monitor/monitor.module';
 
 @NgModule({
   imports: [
@@ -40,13 +40,13 @@ import { DragulaModule } from 'ng2-dragula';
     ShellModule,
     HomeModule,
     AboutModule,
+    MonitorModule,
     LoginModule,
     // MaterialDesignFrameworkModule,
     Bootstrap3FrameworkModule,
     // Bootstrap4FrameworkModule,
     // NoFrameworkModule,
     NgxMaterialModule,
-    DragulaModule.forRoot(),
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],
   exports: [NgxMaterialModule],
