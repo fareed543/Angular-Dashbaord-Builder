@@ -17,7 +17,8 @@ export const environment = {
   serverUrl: '/api',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR'],
-  siteURL: 'http://localhost:4200'
+  siteURL: 'http://localhost:4200',
+  phpURL: 'http://localhost/dashboard'
 };
 
 /*

@@ -1,18 +1,23 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { JsonService } from '@app/json-form/json.service';
-
+import { JsonService } from '@app/monitor/json.service';
+import { NoneComponent } from 'angular7-json-schema-form';
 @Component({
   selector: 'app-widgets',
   templateUrl: './widgets.component.html',
-  styleUrls: ['./widgets.component.scss']
+  styleUrls: ['./widgets.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WidgetsComponent implements OnInit, AfterViewInit {
+  widgetName: string;
   JsonSchema: any;
-
   CustomJsonSchema = {
     type: 'object',
     properties: {}
+  };
+
+  widgets = {
+    submit: NoneComponent
   };
   yourAngularSchemaFormLayout: any = [];
   yourData: any[] = [];
@@ -70,5 +75,18 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
                         event.previousIndex,
                         event.currentIndex);
     }*/
+  }
+
+  saveWidget() {
+    if (!!this.widgetName) {
+      const req = { name: this.widgetName, fields: this.CustomJsonSchema };
+      this.jsonService.saveWidget(req).subscribe(response => {
+        if (response.success) {
+          alert('Widget Created');
+        }
+      });
+    } else {
+      alert('Enter Widget Name');
+    }
   }
 }

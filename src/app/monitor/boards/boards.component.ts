@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { JsonService } from '@app/json-form/json.service';
+import { JsonService } from '../json.service';
 
 @Component({
   selector: 'app-boards',
@@ -8,9 +8,11 @@ import { JsonService } from '@app/json-form/json.service';
   styleUrls: ['./boards.component.scss']
 })
 export class BoardsComponent implements OnInit {
-  widgets = ['Widget 3', 'Widget 4', 'Widget 5', 'Widget 6'];
+  boardName: string;
+  widgets: any;
+  //widgets = ['Widget 3', 'Widget 4', 'Widget 5', 'Widget 6'];
 
-  selectedWidgets = ['Widget 1', 'Widget 2'];
+  selectedWidgets: any[] = [];
 
   jsonFormOptions = {
     addSubmit: false, // Add a submit button if layout does not have one
@@ -21,30 +23,6 @@ export class BoardsComponent implements OnInit {
     defaultWidgetOptions: { feedback: true } // Show inline feedback icons
   };
 
-  JsonSchema = {
-    type: 'object',
-    properties: {
-      first_name: {
-        type: 'string'
-      },
-      address: {
-        type: 'object',
-        properties: {
-          street_1: {
-            type: 'string'
-          },
-          city: {
-            type: 'string'
-          }
-        }
-      }
-    }
-  };
-
-  CustomJsonSchema = {
-    type: 'object',
-    properties: {}
-  };
   yourAngularSchemaFormLayout: any = [];
   yourData: any[] = [];
   responseData: any;
@@ -60,20 +38,9 @@ export class BoardsComponent implements OnInit {
   }
 
   showJsonForm() {
-    this.jsonService.getJsonData().subscribe(response => {
-      this.responseData = response;
-      // this.yourData = this.responseData.data;
-      //this.JsonSchema = this.responseData.schema;
-      this.yourAngularSchemaFormLayout = this.responseData.layout;
+    this.jsonService.getWidgets().subscribe(response => {
+      this.widgets = response.widgets;
     });
-  }
-
-  addField(fieldName: any) {
-    this.CustomJsonSchema.properties[fieldName.key] = fieldName.value;
-    this.yourAngularSchemaFormLayout = {
-      key: fieldName.key,
-      notitle: true
-    };
   }
 
   showTree(item: any) {
@@ -85,10 +52,19 @@ export class BoardsComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    this.selectedWidgets.push(event.item.data);
+  }
+
+  saveBoard() {
+    if (!!this.boardName) {
+      const req = { name: this.boardName, widgets: this.selectedWidgets };
+      this.jsonService.saveBoard(req).subscribe(response => {
+        if (response.success) {
+          alert('Board Created');
+        }
+      });
     } else {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      alert('Enter Board Name');
     }
   }
 }

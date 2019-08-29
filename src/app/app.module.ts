@@ -15,7 +15,6 @@ import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { JsonFormComponent } from './json-form/json-form.component';
 
 // import { MaterialDesignFrameworkModule } from 'angular7-json-schema-form';
 import { Bootstrap3FrameworkModule } from 'angular7-json-schema-form';
@@ -50,7 +49,7 @@ import { MonitorModule } from './monitor/monitor.module';
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],
   exports: [NgxMaterialModule],
-  declarations: [AppComponent, JsonFormComponent],
+  declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

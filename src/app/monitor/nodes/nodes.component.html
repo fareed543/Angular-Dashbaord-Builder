@@ -17,12 +17,13 @@
                 [cdkDropListConnectedTo]="[selectedWidgetsList]"
                 class="example-list"
                 (cdkDropListDropped)="drop($event)"> --><!--cdkDrag-->
-      <div class="example-box" *ngFor="let item of nodes">{{ item }}</div>
+      <div class="example-box" *ngFor="let item of nodes" (click)="showNode(item)">{{ item.name }}</div>
       <!-- </div> -->
     </div>
-    <div class="col-sm-9 border">
-      <h1>Dashboard 1</h1>
+    <div class="col-sm-9 border" *ngIf="!!selectedNode">
+      <h1>{{ selectedNode.name }}</h1>
       <div
+        *ngIf="!!selectedNode"
         cdkDropList
         #dashboardsList="cdkDropList"
         [cdkDropListData]="dashboards"
@@ -31,10 +32,9 @@
       >
         <!--[cdkDropListConnectedTo]="[widgetsList]"-->
 
-        <div class="example-box" *ngFor="let item of dashboards" cdkDrag>
-          <h1>{{ item }}</h1>
-
-          <json-schema-form [schema]="JsonSchema" framework="bootstrap-3" [options]="jsonFormOptions">
+        <div class="example-box" *ngFor="let item of selectedNode.widget" cdkDrag>
+          <h1>{{ item.name }}</h1>
+          <json-schema-form [schema]="item.fields" framework="bootstrap-3" [options]="jsonFormOptions">
           </json-schema-form>
         </div>
         <!-- </div> -->

@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { JsonService } from '@app/json-form/json.service';
+import { JsonService } from '../json.service';
 
 @Component({
   selector: 'app-nodes',
@@ -8,7 +8,8 @@ import { JsonService } from '@app/json-form/json.service';
   styleUrls: ['./nodes.component.scss']
 })
 export class NodesComponent implements OnInit, AfterViewInit {
-  nodes = ['Node 1', 'Node 2', 'Node 3'];
+  nodes: any; // = ['Node 1', 'Node 2', 'Node 3'];
+  selectedNode: any;
 
   dashboards = ['Widget 1', 'Widget 2', 'Widget 3', 'Widget 4'];
 
@@ -55,11 +56,10 @@ export class NodesComponent implements OnInit, AfterViewInit {
   }
 
   showJsonForm() {
-    this.jsonService.getJsonData().subscribe(response => {
-      this.responseData = response;
-      // this.yourData = this.responseData.data;
-      // this.JsonSchema = this.responseData.schema;
-      //this.yourAngularSchemaFormLayout = this.responseData.layout;
+    this.jsonService.getBoards().subscribe(response => {
+      console.log(response.boards);
+      this.nodes = response.boards;
+      // this.responseData = response;
     });
   }
 
@@ -69,5 +69,10 @@ export class NodesComponent implements OnInit, AfterViewInit {
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
+  }
+
+  showNode(item: any) {
+    this.selectedNode = item;
+    console.log(item);
   }
 }
