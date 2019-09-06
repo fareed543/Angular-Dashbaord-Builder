@@ -4,7 +4,7 @@
       </pre> -->
   <div class="row">
     <div class="col-sm-12">
-      <h1>Nodes</h1>
+      <h1>Dashboard</h1>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
       <!-- </div> -->
     </div>
     <div class="col-sm-9 border" *ngIf="!!selectedNode">
-      <h1>{{ selectedNode.name }}</h1>
+      <h1 class="text-center">{{ selectedNode.name }}</h1>
       <div
         *ngIf="!!selectedNode"
         cdkDropList
@@ -32,10 +32,17 @@
       >
         <!--[cdkDropListConnectedTo]="[widgetsList]"-->
 
-        <div class="example-box" *ngFor="let item of selectedNode.widget" cdkDrag>
-          <h1>{{ item.name }}</h1>
-          <json-schema-form [schema]="item.fields" framework="bootstrap-3" [options]="jsonFormOptions">
-          </json-schema-form>
+        <div class="example-box widget" *ngFor="let item of selectedNode.widget" cdkDrag>
+          <div class="card">
+            <div class="card-header">
+              {{ item.name }}
+            </div>
+
+            <div class="card-body">
+              <json-schema-form [schema]="item.fields" framework="bootstrap-3" [options]="jsonFormOptions">
+              </json-schema-form>
+            </div>
+          </div>
         </div>
         <!-- </div> -->
       </div>

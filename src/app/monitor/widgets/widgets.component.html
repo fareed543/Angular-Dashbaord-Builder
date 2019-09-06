@@ -2,7 +2,6 @@
   <div class="row">
     <div class="col-sm-12">
       <h1>Create Widgets</h1>
-      <input type="button" value="Save Widget" (click)="saveWidget()" />
     </div>
   </div>
 
@@ -34,16 +33,23 @@
       </div>
     </div>
     <div class="col-sm-9 border">
-      <input
-        type="text"
-        name="widgetName"
-        [(ngModel)]="widgetName"
-        class="form-control widget-name"
-        placeholder="Enter Widget Name"
-      />
+      <div class="row">
+        <div class="col-sm-9">
+          <input
+            type="text"
+            name="widgetName"
+            [(ngModel)]="widgetName"
+            class="form-control widget-name"
+            placeholder="Enter Widget Name"
+          />
+        </div>
+        <div class="col-sm-3 save-widget-button">
+          <button type="button" class="btn btn-primary" (click)="saveWidget()">Save Widget</button>
+        </div>
+      </div>
 
+      <!-- Here - {{ customJsonSchema?.properties | json}} -->
       <div
-        b
         cdkDropList
         #doneList="cdkDropList"
         [cdkDropListConnectedTo]="[todoList]"
@@ -51,13 +57,14 @@
         (cdkDropListDropped)="drop($event)"
       >
         <json-schema-form
-          [schema]="CustomJsonSchema"
+          [schema]="customJsonSchema"
           [form]="yourAngularSchemaFormLayout"
           framework="bootstrap-3"
           (onSubmit)="onFormSubmit($event)"
           [widgets]="widgets"
           ><!--[(model)]="yourData"-->
         </json-schema-form>
+        <div class="drag-area">-- Drag Elements Here --</div>
       </div>
     </div>
   </div>

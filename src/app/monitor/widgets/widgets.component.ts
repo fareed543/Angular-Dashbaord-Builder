@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/co
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { JsonService } from '@app/monitor/json.service';
 import { NoneComponent } from 'angular7-json-schema-form';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-widgets',
   templateUrl: './widgets.component.html',
@@ -11,7 +13,7 @@ import { NoneComponent } from 'angular7-json-schema-form';
 export class WidgetsComponent implements OnInit, AfterViewInit {
   widgetName: string;
   JsonSchema: any;
-  CustomJsonSchema = {
+  customJsonSchema = {
     type: 'object',
     properties: {}
   };
@@ -19,7 +21,17 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
   widgets = {
     submit: NoneComponent
   };
-  yourAngularSchemaFormLayout: any = [];
+  yourAngularSchemaFormLayout: any = [
+    // {
+    //   "type": "flex",
+    //   "flex-flow": "row wrap",
+    //   "items": [
+    //     "last_name",
+    //     "first_name"
+    //   ]
+    // }
+  ];
+
   yourData: any[] = [];
   responseData: any;
   fieldCount: number = 0;
@@ -38,12 +50,12 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
       this.responseData = response;
       // this.yourData = this.responseData.data;
       this.JsonSchema = this.responseData.schema;
-      //this.yourAngularSchemaFormLayout = this.responseData.layout;
+      // this.yourAngularSchemaFormLayout = this.responseData.layout;
     });
   }
 
   addField(fieldName: any) {
-    this.CustomJsonSchema.properties[fieldName.key] = fieldName.value;
+    this.customJsonSchema.properties[fieldName.key] = fieldName.value;
     this.yourAngularSchemaFormLayout = {
       key: fieldName.key,
       notitle: true
@@ -79,10 +91,27 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
 
   saveWidget() {
     if (!!this.widgetName) {
-      const req = { name: this.widgetName, fields: this.CustomJsonSchema };
+      const req = { name: this.widgetName, fields: this.customJsonSchema };
       this.jsonService.saveWidget(req).subscribe(response => {
         if (response.success) {
-          alert('Widget Created');
+          Swal.fire({
+            // position: 'top-end',
+            type: 'success',
+            title: 'Widget Created',
+            showConfirmButton: true,
+            // showConfirmButton: false,
+            // timer: 1500,
+            confirmButtonText: 'Okay'
+          }).then(result => {
+            console.log(result);
+            if (result.value) {
+              this.widgetName = '';
+              this.customJsonSchema = {
+                type: 'object',
+                properties: {}
+              };
+            }
+          });
         }
       });
     } else {

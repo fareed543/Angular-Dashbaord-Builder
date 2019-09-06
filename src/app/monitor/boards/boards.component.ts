@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { JsonService } from '../json.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-boards',
@@ -60,7 +61,21 @@ export class BoardsComponent implements OnInit {
       const req = { name: this.boardName, widgets: this.selectedWidgets };
       this.jsonService.saveBoard(req).subscribe(response => {
         if (response.success) {
-          alert('Board Created');
+          Swal.fire({
+            // position: 'top-end',
+            type: 'success',
+            title: 'Board Created',
+            showConfirmButton: true,
+            // showConfirmButton: false,
+            // timer: 1500,
+            confirmButtonText: 'Okay'
+          }).then(result => {
+            console.log(result);
+            if (result.value) {
+              this.boardName = '';
+              this.selectedWidgets = [];
+            }
+          });
         }
       });
     } else {
