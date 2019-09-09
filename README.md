@@ -3,6 +3,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
+
+## Components we Used
+
+[angular6-json-schema-form](https://www.npmjs.com/package/angular6-json-schema-form)
+[drag-drop](https://material.angular.io/cdk/drag-drop)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
