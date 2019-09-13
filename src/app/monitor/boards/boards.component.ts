@@ -82,4 +82,9 @@ export class BoardsComponent implements OnInit {
       alert('Enter Board Name');
     }
   }
+
+  removeItem(item: any) {
+    const index = this.selectedWidgets.indexOf(item);
+    this.selectedWidgets.splice(index, 1);
+  }
 }

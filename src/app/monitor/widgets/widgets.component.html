@@ -1,13 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h1>Create Widgets</h1>
+      <h1>Create Widgets - With Arrays</h1>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-3 border">
       <div *ngIf="!!JsonSchema">
+        <h3>Parameters</h3>
         <div cdkDropList #todoList="cdkDropList" class="example-list" [cdkDropListConnectedTo]="[doneList]">
           <div *ngFor="let item of JsonSchema.properties | keyvalue">
             <i
@@ -49,6 +50,10 @@
       </div>
 
       <!-- Here - {{ customJsonSchema?.properties | json}} -->
+
+      <!-- <pre>
+        {{customJsonSchema | json}}
+      </pre> -->
       <div
         cdkDropList
         #doneList="cdkDropList"
@@ -56,14 +61,39 @@
         class="example-list dotted-border"
         (cdkDropListDropped)="drop($event)"
       >
-        <json-schema-form
+        <div *ngFor="let widget of customArray | keyvalue" cdkDrag>
+          <div class="card">
+            <div class="card-body">
+              <input [hidden]="!widget.showInput" type="text" (input)="updateLabel(widget, $event.target.value)" />
+              <span (click)="widget.showInput = !widget.showInput">
+                <span *ngIf="!widget.showInput"><i class="fas fa-pencil-alt mr-2" aria-hidden="true"></i></span>
+                <span *ngIf="!!widget.showInput"
+                  ><i class="fas fa-save mr-2 ml-2 font-size-20" aria-hidden="true"></i
+                ></span>
+
+                <!-- <span *ngIf="!widget.showInput">
+                      <i class="fas fa-pencil" aria-hidden="true"></i>
+                    </span>
+                    <span *ngIf="!!widget.showInput">
+                      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                    </span> -->
+              </span>
+
+              <b>{{ !!widget.value.label ? widget.value.label : (widget.value.key | json) }}</b>
+              <span (click)="removeParameter(widget)"><i class="fas fa-trash-alt float-right font-size-20"></i> </span>
+            </div>
+          </div>
+        </div>
+        <!--cdkDrag-->
+        <!-- <json-schema-form
           [schema]="customJsonSchema"
           [form]="yourAngularSchemaFormLayout"
           framework="bootstrap-3"
           (onSubmit)="onFormSubmit($event)"
           [widgets]="widgets"
-          ><!--[(model)]="yourData"-->
-        </json-schema-form>
+          >
+        </json-schema-form> -->
+        <!--[(model)]="yourData"-->
         <div class="drag-area">-- Drag Elements Here --</div>
       </div>
     </div>

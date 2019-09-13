@@ -12,5 +12,7 @@ export const environment = {
   version: env.npm_package_version,
   serverUrl: 'https://api.chucknorris.io',
   defaultLanguage: 'en-US',
-  supportedLanguages: ['en-US', 'fr-FR']
+  supportedLanguages: ['en-US', 'fr-FR'],
+  siteURL: 'http://localhost:4200',
+  phpURL: 'http://localhost/dashboard'
 };

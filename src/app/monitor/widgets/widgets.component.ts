@@ -11,8 +11,11 @@ import Swal from 'sweetalert2';
   encapsulation: ViewEncapsulation.None
 })
 export class WidgetsComponent implements OnInit, AfterViewInit {
+  // gridView = true;
+
   widgetName: string;
   JsonSchema: any;
+  customArray: any = [];
   customJsonSchema = {
     type: 'object',
     properties: {}
@@ -55,7 +58,7 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
   }
 
   addField(fieldName: any) {
-    this.customJsonSchema.properties[fieldName.key] = fieldName.value;
+    // this.customJsonSchema.properties[fieldName.key] = fieldName.value;
     this.yourAngularSchemaFormLayout = {
       key: fieldName.key,
       notitle: true
@@ -75,10 +78,21 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    const field = { key: event.item.data['key'], value: event.item.data['value'] };
-    this.addField(field);
-    console.log(event.container);
-    console.log(event.previousContainer);
+    if (event.previousContainer === event.container) {
+      if (event.currentIndex >= this.customArray.length) {
+        let k = event.currentIndex - this.customArray.length + 1;
+        while (k--) {
+          this.customArray.push(undefined);
+        }
+      }
+      this.customArray.splice(event.currentIndex, 0, this.customArray.splice(event.previousIndex, 1)[0]);
+      // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      const field = { key: event.item.data['key'], value: event.item.data['value'], label: event.item.data['label'] };
+      this.addField(field);
+      this.customArray.push(field);
+    }
+
     /*if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -91,6 +105,20 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
 
   saveWidget() {
     if (!!this.widgetName) {
+      for (const field of this.customArray) {
+        console.log(field);
+        const label = !!field.label ? field.label : field.key;
+        this.customJsonSchema.properties[label] = {
+          parameter: field.key,
+          type: field.value.type,
+          label: field.label
+        };
+      }
+      console.log(this.customJsonSchema);
+      // this.customArray
+      // return false;
+      // this.customJsonSchema = this.customArray;
+
       const req = { name: this.widgetName, fields: this.customJsonSchema };
       this.jsonService.saveWidget(req).subscribe(response => {
         if (response.success) {
@@ -106,6 +134,7 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
             console.log(result);
             if (result.value) {
               this.widgetName = '';
+              this.customArray = [];
               this.customJsonSchema = {
                 type: 'object',
                 properties: {}
@@ -117,5 +146,19 @@ export class WidgetsComponent implements OnInit, AfterViewInit {
     } else {
       alert('Enter Widget Name');
     }
+  }
+
+  removeParameter(item: any) {
+    let index = this.customArray.indexOf(item.value);
+    this.customArray.splice(index, 1);
+  }
+
+  editParameter(item: any) {
+    item.value.label = 'fareed';
+    console.log(item.value.label);
+  }
+
+  updateLabel(parameter: any, value: string) {
+    parameter.value.label = value;
   }
 }
